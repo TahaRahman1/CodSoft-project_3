@@ -1,180 +1,47 @@
-# CodSoft-project_3
+# Tic-Tac-Toe Game
 
-Tic_tac_toe game
+## Overview
+This C++ program implements a Tic-Tac-Toe game where players can play against each other or against the computer. The game provides a simple command-line interface and allows players to take turns making moves on a 3x3 grid. The first player to get three of their marks in a row (horizontally, vertically, or diagonally) wins the game. If all spaces on the board are filled without a winner, the game ends in a draw.
 
-CODE -----
+## Features
+- **Player vs Computer**: One player can play against the computer, where the computer's moves are determined randomly.
+- **Player X vs Player O**: Two players can play against each other, taking turns to make moves.
+- **Dynamic Board Display**: The current state of the board is displayed after each move, allowing players to visualize the game progress.
+- **Game State Checking**: The program checks the game state after each move to determine if a player has won or if the game has ended in a draw.
 
-// Taha Rahman
+## How the Code Works
 
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
+The code is structured into several functions, each responsible for a specific aspect of the game:
 
-using namespace std;
+- **displayBoard**: This function displays the current state of the Tic-Tac-Toe board.
+- **playerMoveX**: This function allows Player X to make a move on the board.
+- **playerMoveO**: This function allows Player O to make a move on the board.
+- **computerMove**: This function determines the computer's move when playing against the computer.
+- **resetBoard**: This function resets the game board to its initial state.
+- **checkGameState**: This function checks the current state of the game to determine if there is a winner or if the game has ended in a draw.
+- **playAgainstComputer**: This function implements the game logic for playing against the computer.
+- **playAgainstPlayer**: This function implements the game logic for playing against another player.
 
-char gameBoard[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
-int playerMove;
+The `main` function serves as the entry point of the program, where the user chooses the game mode (Player vs Computer or Player X vs Player O) and the corresponding game function is called to start the game.
 
-void displayBoard();
-void playerMoveX();
-void playerMoveO();
-void computerMove();
-void resetBoard();
-char checkGameState();
-void playAgainstComputer();
-void playAgainstPlayer();
+## How to Use
+1. **Compile the Program**: Compile the C++ source code (`tic_tac_toe.cpp`) using a C++ compiler.
+    ```
+    g++ tic_tac_toe.cpp -o tic_tac_toe
+    ```
+2. **Run the Program**: Execute the compiled binary to start the Tic-Tac-Toe game.
+    ```
+    ./tic_tac_toe
+    ```
+3. **Choose Game Mode**: Select the game mode:
+    - Player vs Computer (1)
+    - Player X vs Player O (2)
+4. **Make Moves**: Follow the prompts to enter positions (1-9) to make moves on the board.
+5. **Game Outcome**: The game ends when a player wins or when the game ends in a draw. The winner or draw result is displayed.
 
-int main() {
-    while (true) {
-        int gameMode;
-        cout << "Welcome to Tic-Tac-Toe!" << endl;
-        cout << "1. Player vs Computer" << endl;
-        cout << "2. Player X vs Player O" << endl;
-        cout << "Choose the game mode: ";
-        cin >> gameMode;
+## Contributors
+- [Taha Rahman](https://github.com/Taha Rahman1)
 
-        switch (gameMode) {
-            case 1:
-                playAgainstComputer();
-                break;
-            case 2:
-                playAgainstPlayer();
-                break;
-            default:
-                cout << "Invalid Mode" << endl;
-                break;
-        }
-    }
-    return 0;
-}
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-void resetBoard() {
-    for (int i = 0; i < 9; i++) {
-        gameBoard[i] = ' ';
-    }
-}
-
-void playerMoveX() {
-    while (true) {
-        cout << "Player X's turn. Enter a position (1-9): ";
-        cin >> playerMove;
-        playerMove--;
-
-        if (playerMove < 0 || playerMove > 8 || gameBoard[playerMove] != ' ') {
-            cout << "Invalid position. Try again." << endl;
-        } else {
-            gameBoard[playerMove] = 'X';
-            break;
-        }
-    }
-}
-
-void playerMoveO() {
-    while (true) {
-        cout << "Player O's turn. Enter a position (1-9): ";
-        cin >> playerMove;
-        playerMove--;
-
-        if (playerMove < 0 || playerMove > 8 || gameBoard[playerMove] != ' ') {
-            cout << "Invalid position. Try again." << endl;
-        } else {
-            gameBoard[playerMove] = 'O';
-            break;
-        }
-    }
-}
-
-void computerMove() {
-    cout << "Computer's turn." << endl;
-    srand(time(0));
-
-    do {
-        playerMove = rand() % 9;
-    } while (gameBoard[playerMove] != ' ');
-
-    gameBoard[playerMove] = 'O';
-}
-
-void displayBoard() {
-    cout << " " << gameBoard[0] << " | " << gameBoard[1] << " | " << gameBoard[2] << endl;
-    cout << " ---------" << endl;
-    cout << " " << gameBoard[3] << " | " << gameBoard[4] << " | " << gameBoard[5] << endl;
-    cout << " ---------" << endl;
-    cout << " " << gameBoard[6] << " | " << gameBoard[7] << " | " << gameBoard[8] << endl;
-}
-
-char checkGameState() {
-    for (int i = 0; i < 3; i++) {
-        if (gameBoard[i * 3] == gameBoard[i * 3 + 1] && gameBoard[i * 3 + 1] == gameBoard[i * 3 + 2] && gameBoard[i * 3] != ' ') {
-            return gameBoard[i * 3];
-        }
-        if (gameBoard[i] == gameBoard[i + 3] && gameBoard[i + 3] == gameBoard[i + 6] && gameBoard[i] != ' ') {
-            return gameBoard[i];
-        }
-    }
-    if ((gameBoard[0] == gameBoard[4] && gameBoard[4] == gameBoard[8] && gameBoard[0] != ' ') ||
-        (gameBoard[2] == gameBoard[4] && gameBoard[4] == gameBoard[6] && gameBoard[2] != ' ')) {
-        return gameBoard[4];
-    }
-    bool isDraw = true;
-    for (int i = 0; i < 9; i++) {
-        if (gameBoard[i] == ' ') {
-            isDraw = false;
-            break;
-        }
-    }
-    if (isDraw) {
-        return 'D';
-    }
-    return 'C';
-}
-
-void playAgainstComputer() {
-    resetBoard();
-    while (true) {
-        displayBoard();
-        playerMoveX();
-        char gameState = checkGameState();
-        if (gameState == 'X') {
-            displayBoard();
-            cout << "Player X wins!" << endl;
-            break;
-        } else if (gameState == 'D') {
-            displayBoard();
-            cout << "It's a draw!" << endl;
-            break;
-        }
-        computerMove();
-        gameState = checkGameState();
-        if (gameState == 'O') {
-            displayBoard();
-            cout << "Computer wins!" << endl;
-            break;
-        }
-    }
-}
-
-void playAgainstPlayer() {
-    resetBoard();
-    while (true) {
-        displayBoard();
-        playerMoveX();
-        char gameState = checkGameState();
-        if (gameState == 'X') {
-            displayBoard();
-            cout << "Player X wins!" << endl;
-            break;
-        } else if (gameState == 'D') {
-            displayBoard();
-            cout << "It's a draw!" << endl;
-            break;
-        }
-        playerMoveO();
-        gameState = checkGameState();
-        if (gameState == 'O') {
-            displayBoard();
-            cout << "Player O wins!" << endl;
-            break;
-        }
-    }
-}
