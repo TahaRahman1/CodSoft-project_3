@@ -40,7 +40,7 @@ The `main` function serves as the entry point of the program, where the user cho
 5. **Game Outcome**: The game ends when a player wins or when the game ends in a draw. The winner or draw result is displayed.
 
 ## Contributors
-- [Taha Rahman](https://github.com/Taha Rahman1)
+- [Taha Rahman](https://github.com/TahaRahman1)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
